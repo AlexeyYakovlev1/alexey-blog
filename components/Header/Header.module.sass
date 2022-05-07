@@ -1,0 +1,66 @@
+@import "../../styles/_vars"
+
+.header
+    padding: 30px 0
+    margin-bottom: 20px
+    position: sticky
+    top: 0
+    z-index: 9
+    box-shadow: $shadow
+    background-color: rgba(255,255,255,.9)
+
+.body
+    display: grid
+    grid-template-rows: repeat(2, auto)
+    gap: 20px
+
+.down
+    display: grid
+    grid-template-columns: repeat(2, auto)
+    gap: 20px
+    justify-content: space-between
+    align-items: center
+    position: sticky
+    top: 0
+
+.nav
+    max-width: 100%
+    &List
+        display: flex
+        align-items: center
+    &Item
+        color: $gray
+        font-weight: 300
+        transition: color .2s ease
+        &:not(:first-child)
+            margin-left: 20px
+        &:hover
+            color: $dark
+        &Active
+            color: $dark
+
+.connect
+    display: grid
+    grid-template-columns: auto 1fr
+    align-items: center
+    justify-content: space-between
+    gap: 20px
+    &Title
+        color: $gray
+        font-weight: 300
+    &List
+        display: flex
+        align-items: center
+    &Item
+        width: 32px
+        height: 32px
+        &:not(:first-child)
+            margin-left: 20px
+
+@media screen and (max-width: 1025px)
+    .connectTitle
+        display: none
+
+@media screen and (max-width: 765px)
+    .connect
+        display: none

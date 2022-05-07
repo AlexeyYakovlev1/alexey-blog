@@ -1,0 +1,29 @@
+@import "../../styles/_vars"
+
+.welcome
+    background-color: $lightGray
+    padding: 50px
+
+.body
+    display: grid
+    grid-template-columns: auto 1fr
+    gap: 30px
+    align-items: center
+
+.avatar img
+    border-radius: 50%
+
+.about
+    display: grid
+    grid-template-rows: repeat(2, auto)
+    gap: 10px
+
+.description
+    font-weight: 300
+    color: $gray
+    font-size: 15px
+    line-height: 20px
+
+@media screen and (max-width: 850px)
+    .welcome
+        padding: 50px 0

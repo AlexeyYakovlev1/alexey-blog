@@ -1,0 +1,52 @@
+@import "../../../styles/_vars"
+
+.post
+    background-color: $white
+    padding: 15px 20px
+    box-shadow: $shadow
+    max-width: 800px
+
+.createdAt
+    color: $gray
+    font-size: 14px
+    margin-bottom: 10px
+    display: block
+
+.title
+    font-family: $fontFiraSans
+    font-weight: 600
+    color: $dark
+    line-height: 30px
+    margin-bottom: 15px
+    display: -webkit-box
+    -webkit-line-clamp: 3
+    -webkit-box-orient: vertical
+    overflow: hidden
+    text-overflow: ellipsis
+    transition: color .2s ease
+    &:hover
+        color: $gray
+
+.tags
+    display: flex
+    align-items: center
+    margin-bottom: 20px
+    &Item:not(:first-child)
+        margin-left: 10px
+
+.coverPhoto
+    max-width: 100%
+    max-height: 100%
+    margin-bottom: 20px
+
+.description
+    color: $dark
+    font-weight: 400
+    line-height: 22px
+    font-family: $fontFiraSans
+    display: -webkit-box
+    -webkit-line-clamp: 3
+    -webkit-box-orient: vertical
+    overflow: hidden
+    text-overflow: ellipsis
+    margin-bottom: 20px

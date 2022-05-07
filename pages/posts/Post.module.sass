@@ -1,0 +1,64 @@
+@import "../../styles/_vars"
+
+.post
+    max-width: 1200px
+    display: grid
+    grid-template-rows: auto 1fr auto
+    gap: 50px
+
+.header
+    display: grid
+    grid-template-rows: repeat(3, auto)
+    gap: 10px
+
+.tags
+    display: flex
+    align-items: center
+    &Item:not(:first-child)
+        margin-left: 10px
+
+.title
+    max-width: 900px
+
+.createdAt
+    font-size: 15px
+    color: $gray
+
+.description
+    font-family: $fontInter
+    font-weight: 300
+    line-height: 40px
+    font-size: 20px
+
+.comments
+    &Title
+        font-weight: 600
+    &Text
+        display: block
+        margin-top: 10px
+    &Form
+        margin: 30px 0
+        display: grid
+        grid-template-rows: repeat(auto-fill, auto)
+        gap: 10px
+        max-width: 400px
+        & textarea
+            min-height: 150px
+    &FormAvatar
+        display: grid
+        grid-template-columns: 24px 1fr
+        gap: 10px
+        align-items: center
+        & img
+            border-radius: 50%
+
+.comment
+    margin-top: 20px
+    &:first-child
+        margin-top: 50px
+
+@media screen and (max-width: 500px)
+    .body
+        padding: 10px 0
+        border-bottom: 1px solid $lightGray
+        border-top: 1px solid $lightGray

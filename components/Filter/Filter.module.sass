@@ -1,0 +1,38 @@
+@import "../../styles/_vars"
+
+.filter
+    margin-top: 50px
+    display: grid
+    grid-template-columns: repeat(auto-fill, minmax(auto, 150px))
+
+.tag
+    position: relative
+    &::after
+        position: absolute
+        content: ""
+        width: 14px
+        height: 12px
+        background-image: url(/images/down-arrow.png)
+        right: 15px
+        bottom: 14px
+
+.select
+    width: 100%
+    padding: 10px 15px
+    border: 1px solid $lightGray
+    background-color: $white
+    font-size: 15px
+    font-family: $fontInter
+    font-weight: 300
+    color: $gray
+    -moz-appearance: none
+    -webkit-appearance: none
+    cursor: pointer
+    &::-ms-expand
+        display: none
+    &:hover
+        border-color: $dark
+        color: $dark
+    &:focus
+        border-color: $dark
+        color: $dark
