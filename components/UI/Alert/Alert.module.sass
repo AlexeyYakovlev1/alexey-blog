@@ -1,0 +1,49 @@
+@import "../../../styles/_vars"
+
+.alert
+    position: absolute
+    top: 15px
+    right: 15px
+    background-color: $white
+    display: grid
+    grid-template-columns: auto 1fr auto
+    gap: 20px
+    padding: 10px
+    box-shadow: $shadow
+    border-radius: 4px
+    z-index: 999
+    align-items: center
+    justify-content: space-between
+    max-width: 300px
+
+.photo
+    padding-left: 10px
+    border-left: 2px solid $dark
+    height: 100%
+    display: flex
+    align-items: center
+    &.success
+        border-color: #24A479
+    &.wrong
+        border-color: #E9BB67
+    &.info
+        border-color: #007AC4
+
+.content
+    display: grid
+    grid-template-rows: repeat(2, auto)
+    gap: 5px
+
+.title
+    font-weight: 600
+    font-family: $fontInter
+    font-size: 18px
+
+.message
+    color: $gray
+    font-size: 14px
+
+.close
+    cursor: pointer
+    & span
+        font-size: 12px

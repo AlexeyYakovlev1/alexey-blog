@@ -1,16 +1,18 @@
-import { DetailedHTMLProps, InputHTMLAttributes } from "react";
+import React from "react";
 import classes from "./Input.module.sass";
 import cn from "classnames";
 
-interface IInputProps extends DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>,HTMLInputElement> { }
-
-const Input = ({ className, ...props }: IInputProps): JSX.Element => {
+// sorry for any type but this solution must be here
+const Input = React.forwardRef(({ className, ...props }: any, ref): JSX.Element => {
     return (
         <input
+            ref={ref}
             className={cn(classes.input, className)}
             {...props}
         />
     );
-};
+});
+
+Input.displayName = "Input";
 
 export default Input;
