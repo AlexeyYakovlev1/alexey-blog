@@ -2,6 +2,7 @@ import Head from "next/head";
 import React from "react";
 import Footer from "../Footer/Footer";
 import Header from "../Header/Header";
+import Menu from "../Header/Menu/Menu";
 import classes from "./Layouts.module.sass";
 
 interface IMainLayoutProps {
@@ -20,6 +21,7 @@ const MainLayout = ({ title = "The Alexey Blog", children }: IMainLayoutProps): 
             </Head>
             <main className={classes.mainLayoutWrapper}>
                 <Header />
+                <Menu />
                 <div className={classes.mainLayoutBody}>{children}</div>
                 <Footer />
             </main>

@@ -25,8 +25,10 @@ const Post = (props:IPost): JSX.Element => {
                     <Image
                         src={"/images/coverPhoto.png"}
                         alt="cover photo"
-                        width={500}
-                        height={200}
+                        layout="responsive"
+                        width="100%"
+                        height="40px"
+                        objectFit="contain"
                     />
                 </div>
                 <div className={classes.content}>

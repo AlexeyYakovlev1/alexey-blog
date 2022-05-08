@@ -38,6 +38,15 @@ const Post: NextPage = (): JSX.Element => {
                     <Title className={classes.title}>Владилен Минин о своих курсах по веб-разработке и опыте использования WebStorm</Title>
                     <span className={classes.createdAt}>05.05.2022</span>
                 </header>
+                <div className={classes.coverPhoto}>
+                    <Image
+                        src="/images/coverPhoto.png"
+                        alt="cover photo"
+                        layout="responsive"
+                        width="100%"
+                        height="35px"
+                    />
+                </div>
                 <div className={classes.body}>
                     <p className={classes.description}>
                         Во-первых, коробочность. Я очень не люблю что-то настраивать. C WebStorm я могу быть уверен в том, что даже если мне придется установить его на новый компьютер, все будет работать сразу, без установки каких-либо расширений. Это очень крутая автоматизация разработки, когда тебе не нужно отвлекаться на что-то лишнее.
