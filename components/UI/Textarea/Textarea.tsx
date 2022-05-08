@@ -1,16 +1,17 @@
-import { DetailedHTMLProps, HTMLAttributes } from "react";
+import React from "react";
 import classes from "./Textarea.module.sass";
 import cn from "classnames";
 
-interface ITextareaProps extends DetailedHTMLProps<HTMLAttributes<HTMLTextAreaElement>,HTMLTextAreaElement> {}
-
-const Textarea = ({ className, ...props }:ITextareaProps) => {
+const Textarea = React.forwardRef(({ className, ...props }: any, ref) => {
     return (
         <textarea
+            ref={ref}
             className={cn(classes.textarea, className)}
             {...props}
         />
     );
-};
+});
+
+Textarea.displayName = "Textarea";
 
 export default Textarea;
