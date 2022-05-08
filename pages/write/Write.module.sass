@@ -1,26 +1,26 @@
 @import "../../styles/_vars"
 
-.login
+.write
     display: grid
     grid-template-rows: auto 1fr
-    gap: 20px
-    justify-content: center
+    gap: 50px
 
 .header
     display: grid
     grid-template-rows: repeat(2, auto)
     gap: 10px
 
-.subtitle
+.description
     color: $gray
     font-size: 15px
 
 .form
     display: grid
-    grid-template-rows: repeat(auto-fill, auto)
+    grid-template-rows: repeat(4, auto)
     gap: 15px
-    max-width: 400px
-
-.submit
-    margin-top: 20px
-    max-width: 100px !important
+    & textarea
+        min-height: 300px
+    &CoverPhoto
+        display: grid
+        grid-template-rows: repeat(2, auto)
+        gap: 10px

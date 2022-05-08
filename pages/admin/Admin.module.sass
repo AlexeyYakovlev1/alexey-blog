@@ -1,0 +1,64 @@
+@import "../../styles/_vars"
+
+.panel
+    display: grid
+    grid-template-rows: auto 1fr
+    gap: 20px
+
+.header
+    display: grid
+    grid-template-columns: repeat(2, auto)
+    justify-content: space-between
+    align-items: center
+    gap: 20px
+
+.actions
+    display: grid
+    grid-template-columns: repeat(3, auto)
+    align-items: center
+    gap: 20px
+
+.body
+    margin-top: 20px
+
+.search input
+    width: 100%
+
+.login
+    display: grid
+    grid-template-rows: auto 1fr
+    gap: 20px
+    justify-content: center
+    &Header
+        display: grid
+        grid-template-rows: repeat(2, auto)
+        gap: 10px
+
+.subtitle
+    color: $gray
+    font-size: 15px
+
+.form
+    display: grid
+    grid-template-rows: repeat(auto-fill, auto)
+    gap: 15px
+    max-width: 400px
+
+.submit
+    margin-top: 20px
+    max-width: 100px !important
+
+.modal
+    display: grid
+    grid-template-rows: repeat(2, auto)
+    gap: 15px
+    justify-content: center
+    &Actions
+        display: grid
+        grid-template-columns: repeat(2, auto)
+        gap: 10px
+
+@media screen and (max-width: 700px)
+    .header
+        grid-template-rows: repeat(2, auto)
+        grid-template-columns: none

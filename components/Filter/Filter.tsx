@@ -1,7 +1,6 @@
-import { NextPage } from "next";
 import classes from "./Filter.module.sass";
 
-const Filter: NextPage = (): JSX.Element => {
+const Filter = (): JSX.Element => {
     return (
         <div className={classes.filter}>
             <div className={classes.tag}>

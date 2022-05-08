@@ -1,8 +1,7 @@
 import classes from "./Footer.module.sass";
 import cn from "classnames";
-import { NextPage } from "next";
 
-const Footer: NextPage = (): JSX.Element => {
+const Footer = (): JSX.Element => {
     return (
         <footer className={classes.footer}>
             <div className={cn(classes.content, "container")}>

@@ -6,11 +6,11 @@ import type { NextPage } from "next";
 import Input from "../../components/UI/Input/Input";
 import Button from "../../components/UI/Button/Button";
 
-const Login: NextPage = (): JSX.Element => {
+const Auth: NextPage = (): JSX.Element => {
     return (
         <MainLayout title="Авторизация">
             <div className={cn(classes.login, "container")}>
-                <header className={classes.header}>
+                <header className={classes.loginHeader}>
                     <Title className={classes.title} tag="h2">Вход</Title>
                     <p className={classes.subtitle}>С возвращением! Пожалуйста введите ваши данные ниже.</p>
                 </header>
@@ -32,4 +32,4 @@ const Login: NextPage = (): JSX.Element => {
     );
 };
 
-export default Login;
+export default Auth;

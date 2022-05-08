@@ -1,10 +1,9 @@
-import type { NextPage } from "next";
 import Image from "next/image";
 import classes from "./Welcome.module.sass";
 import cn from "classnames";
 import Title from "../UI/Title/Title";
 
-const Welcome: NextPage = (): JSX.Element => {
+const Welcome = (): JSX.Element => {
     return (
         <div className={classes.welcome}>
             <div className={cn(classes.body, "container")}>
