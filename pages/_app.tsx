@@ -47,6 +47,7 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
             
             dispatch(login(data.user));
             Cookies.set("token", data.token);
+            
             setLoad(false);
         }
 

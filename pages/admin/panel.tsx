@@ -9,9 +9,12 @@ import Input from "../../components/UI/Input/Input";
 import Posts from "../../components/Posts/Posts";
 import React from "react";
 import Modal from "../../components/UI/Modal/Modal";
+import useAdminCheck from "../../hooks/useAdminCheck";
 
 const Panel: NextPage = (): JSX.Element => {
     const [active, setActive] = React.useState<boolean>(false);
+
+    useAdminCheck();
 
     return (
         <MainLayout title="Панель администратора">
