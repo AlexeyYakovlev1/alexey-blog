@@ -66,6 +66,41 @@
         grid-template-columns: repeat(2, auto)
         gap: 10px
 
+.profile
+    display: grid
+    grid-template-columns: auto 1fr
+    gap: 150px
+    align-items: flex-start
+    &Info
+        display: grid
+        grid-template-rows: repeat(4, auto)
+        gap: 10px
+        background-color: $lightGray
+        padding: 20px
+        border-radius: 3px
+        &Avatar img
+            border-radius: 50%
+    &Settings
+        display: grid
+        grid-template-rows: auto 1fr
+        gap: 50px
+        &Header
+            display: grid
+            grid-template-rows: repeat(2, auto)
+            gap: 10px
+        &Description
+            font-size: 15px
+            color: $gray
+        &Form
+            display: grid
+            grid-template-rows: repeat(auto-fill, auto)
+            gap: 15px
+            max-width: 600px
+        &Submit
+            margin-top: 20px
+        &Input input, textarea
+            width: 100%
+
 @media screen and (max-width: 700px)
     .header
         grid-template-rows: repeat(2, auto)

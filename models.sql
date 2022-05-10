@@ -3,7 +3,7 @@ CREATE TABLE person(
     avatar TEXT DEFAULT '/images/admin-avatar.jpg',
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) NOT NULL,
-    description TEXT DEFAULT '',
+    description TEXT DEFAULT 'Описание профиля отсутствует',
     password TEXT NOT NULL
 );
 

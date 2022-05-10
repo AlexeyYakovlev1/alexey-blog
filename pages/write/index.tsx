@@ -10,8 +10,11 @@ import Button from "../../components/UI/Button/Button";
 import React from "react";
 import { useForm } from "react-hook-form";
 import AlertContext from "../../context/alert.context";
+import useAdminCheck from "../../hooks/useAdminCheck";
 
 const Write: NextPage = () => {
+    useAdminCheck();
+    
     const { setInfo, setActive } = React.useContext(AlertContext);
     const [photo, setPhoto] = React.useState(false);
 

@@ -43,7 +43,7 @@ const Auth: NextPage = (): JSX.Element => {
         reset();
         dispatch(login(servData.user));
         Cookies.set("token", servData.token);
-        router.push("/admin/panel");
+        router.push("/admin/profile");
     };
 
     return (
