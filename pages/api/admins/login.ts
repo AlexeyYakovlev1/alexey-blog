@@ -8,9 +8,9 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
 
     if (method === "POST") {
         try {
-            const { name, password } = body;
-            const query = `SELECT * FROM user WHERE name = $1`;
-            const findAdmin = await db.query(query, [name]);
+            const { email, password } = body;
+            const query = `SELECT * FROM person WHERE email = $1`;
+            const findAdmin = await db.query(query, [email]);
 
             if (!findAdmin.rows.length) {
                 return res.status(400).json({ success: false, message: "Администратор не найден" });
@@ -23,10 +23,10 @@ const login = async (req: NextApiRequest, res: NextApiResponse) => {
                 return res.status(400).json({ success: false, message: "Данные неверны" });
             }
 
-            const payload = { id: admin.id, name: admin.name, roles: admin.roles };
+            const payload = { id: admin.id, email: admin.email };
             const token = sign(payload, `${process.env.JWT_KEY}`, { expiresIn: "24h" });
 
-            res.status(200).json({ success: true, token });
+            res.status(200).json({ success: true, user: { ...admin }, token });
         } catch (e: any) {
             res.status(500).json({ success: false, message: `Ошибка сервера: ${e.message}` });
         }

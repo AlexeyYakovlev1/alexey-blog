@@ -8,11 +8,10 @@ const create = authMiddleware(async (req: NextApiRequest, res: NextApiResponse) 
 
     if (method === "POST") {
         try {
-            const { firstName, lastName, password } = body;
-            const fullName = `${firstName} ${lastName}`;
+            const { name, email, password } = body;
 
-            const queryForSearch = `SELECT * FROM admin WHERE full_name = $1`;
-            const findAdmin = await db.query(queryForSearch, [fullName]);
+            const queryForSearch = `SELECT * FROM person WHERE email = $1`;
+            const findAdmin = await db.query(queryForSearch, [email]);
 
             if (findAdmin.rows.length) {
                 return res.status(400).json({ success: false, message: "Администратор уже существует" });
@@ -23,8 +22,8 @@ const create = authMiddleware(async (req: NextApiRequest, res: NextApiResponse) 
                     return res.status(400).json({ success: false, message: `Ошибка при хешировании: ${err.message}` });
                 }
 
-                const queryForCreate = `INSERT INTO admin(first_name, last_name, full_name, password) VALUES($1, $2, $3, $4) RETURNING *`;
-                const newAdmin = await db.query(queryForCreate, [firstName, lastName, fullName, result]);
+                const queryForCreate = `INSERT INTO person(name, email, password) VALUES($1, $2, $3) RETURNING *`;
+                const newAdmin = await db.query(queryForCreate, [name, email, result]);
                 const admin = newAdmin.rows[0];
 
                 return res.status(201).json({ success: true, message: "Администратор добавлен", admin });

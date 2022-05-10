@@ -8,19 +8,42 @@ import Button from "../../components/UI/Button/Button";
 import React from "react";
 import AlertContext from "../../context/alert.context";
 import { useForm } from "react-hook-form";
+import { useRouter } from "next/router";
+import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { login } from "../../redux/actions/user.actions";
 
 const Auth: NextPage = (): JSX.Element => {
     const { setInfo, setActive } = React.useContext(AlertContext);
-    const {
-        register, formState: { errors, isValid },
-        handleSubmit, reset
-    } = useForm({ mode: "onChange" });
-    
-    const loginHandler = (data: any) => {
-        setInfo({ type: "SUCCESS", message: "Успешный вход в аккаунт." });
-        setActive(true);
+    const { register, formState: { errors, isValid }, handleSubmit, reset } = useForm({ mode: "onChange" });
+    const router = useRouter();
+    const dispatch = useDispatch();
+
+    const loginHandler = async(data: any) => {
+        const response = await fetch(`${process.env.API_URL}/admins/login`, {
+            method: "POST",
+            body: JSON.stringify(data),
+            headers: {
+                "Content-Type": "application/json"
+            }
+        });
+
+        const servData = await response.json();
+
+        if (!response.ok) {
+            setInfo({ type: "WRONG", message: servData.message || "Ошибка, повторите снова." });
+            return setActive(true);
+        }
+
+        if (servData.message) {
+            setInfo({ type: "SUCCESS", message: servData.message || "Успех." });
+            setActive(true);
+        } else setActive(false);
+        
         reset();
-        console.log(data);
+        dispatch(login(servData.user));
+        Cookies.set("token", servData.token);
+        router.push("/admin/panel");
     };
 
     return (

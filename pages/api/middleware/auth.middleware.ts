@@ -12,19 +12,23 @@ const authMiddleware = (fn: any) => async (req: IGetUserAuthInfoRequest, res: Ne
         return fn(req, res);
     }
 
-    try {
-        const token = req.headers.authorization?.split(" ")[1];
-        const decoded = verify(`${token}`, `${process.env.JWT_KEY}`);
+    if (method === "GET") {
+        try {
+            const token = req.headers.authorization?.split(" ")[1];
+            const decoded = verify(`${token}`, `${process.env.JWT_KEY}`);
 
-        if (!decoded) {
-            return res.status(400).json({ success: false, message: "Нет авторизации" });
+            if (!decoded) {
+                return res.status(400).json({ success: false, message: "Нет авторизации" });
+            }
+
+            req.user = decoded;
+
+            return await fn(req, res);
+        } catch (e) {
+            res.status(500).json({ success: false, message: "Нет авторизации" });
         }
-
-        req.user = decoded;
-
-        return await fn(req, res);
-    } catch (e) {
-        res.status(500).json({ success: false, message: "Нет авторизации" });
+    } else {
+        res.status(400).json({ success: false, message: "Мы используем только GET запрос" });
     }
 };
 

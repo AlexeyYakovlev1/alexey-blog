@@ -11,8 +11,8 @@ import React from "react";
 import Modal from "../../components/UI/Modal/Modal";
 
 const Panel: NextPage = (): JSX.Element => {
-    const [active, setActive] = React.useState(false);
-    
+    const [active, setActive] = React.useState<boolean>(false);
+
     return (
         <MainLayout title="Панель администратора">
             {active && 
