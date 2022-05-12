@@ -32,7 +32,7 @@ const Post = (props:IPost): JSX.Element => {
                     />
                 </div>
                 <div className={classes.content}>
-                    <p className={classes.description}>{props.description}</p>
+                    <div dangerouslySetInnerHTML={{__html: props.description}} className={classes.description} />
                 </div>
                 <Button>
                     <Link href={`/posts/${props.id}`}>

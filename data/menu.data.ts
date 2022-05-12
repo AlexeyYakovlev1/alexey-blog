@@ -4,7 +4,7 @@ import VkIcon from "../public/images/connects/vk.svg";
 import GithubIcon from "../public/images/connects/github.svg";
 import { IConnectsMenu, IMenu } from "../interfaces/menu.interface";
 
-export const connectsMenu: Array<IConnectsMenu> = [
+const connectsMenu: Array<IConnectsMenu> = [
     {
         img: GithubIcon,
         link: "https://github.com/AlexeyYakovlev1"
@@ -23,7 +23,7 @@ export const connectsMenu: Array<IConnectsMenu> = [
     }
 ];
 
-export const menuItems: Array<IMenu> = [
+const menuItems: Array<IMenu> = [
     {
         name: "Публикации",
         link: "/"
@@ -33,3 +33,7 @@ export const menuItems: Array<IMenu> = [
         link: "/about"
     }
 ];
+
+export {
+    menuItems, connectsMenu
+};

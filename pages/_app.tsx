@@ -10,6 +10,8 @@ import { login } from "../redux/actions/user.actions";
 import LoadContext from "../context/load.context";
 import Cookies from "js-cookie";
 import store from "../redux/store";
+import posts from "../http/posts.http";
+import { update } from "../redux/actions/posts.actions";
 
 // for use redux devtools
 declare global {
@@ -38,16 +40,19 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
     // state for load context
     const [load, setLoad] = React.useState<boolean>(false);
 
-    // check user authentication
+    // get some data from server
     React.useEffect(() => {
         async function load() {
             setLoad(true);
 
-            const { data }: any = await auth();
-            
-            dispatch(login(data.user));
-            Cookies.set("token", data.token);
-            
+            const { data: userData }: any = await auth();
+            const { data: postsData }: any = await posts();
+
+            dispatch(login(userData.user));
+            dispatch(update(postsData.posts));
+
+            Cookies.set("token", userData.token);
+    
             setLoad(false);
         }
 

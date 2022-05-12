@@ -4,9 +4,12 @@ import { connectsMenu, menuItems } from "../../../data/menu.data";
 import { IConnectsMenu, IMenu } from "../../../interfaces/menu.interface";
 import classes from "./Menu.module.sass";
 import cn from "classnames";
+import { IState } from "../../../interfaces/redux.interface";
+import { useSelector } from "react-redux";
 
 const Menu = (): JSX.Element => {
     const router = useRouter();
+    const isAuth = useSelector((state: IState) => state.user.isAuth);
 
     return (
         <div className={classes.menu}>
@@ -25,6 +28,15 @@ const Menu = (): JSX.Element => {
                                 </Link>
                             </li>
                         ))}
+                        {isAuth && <li
+                            className={cn(classes.navItem, {
+                                [classes.navItemActive]: router.pathname === "/admin/profile"
+                            })}
+                        >
+                            <Link href={`/admin/profile`}>
+                                <a>Админ</a>
+                            </Link>
+                        </li>}
                     </ul>
                 </nav>
                 <div className={classes.connect}>

@@ -7,10 +7,34 @@
 
 .header
     display: grid
-    grid-template-columns: repeat(2, auto)
-    justify-content: space-between
-    align-items: center
-    gap: 20px
+    grid-template-rows: repeat(2, auto)
+    gap: 35px
+    &Nav
+        display: grid
+        grid-template-rows: repeat(2, auto)
+        gap: 20px
+    &Menu
+        max-width: 550px
+        &List
+            display: flex
+            justify-content: space-between
+            align-items: center
+            flex-wrap: wrap
+        &Item
+            margin-bottom: 15px
+            cursor: pointer
+            font-size: 15px
+            color: $gray
+            &:hover
+                color: $dark
+            &Active
+                color: $dark
+    &Posts
+        display: grid
+        grid-template-columns: repeat(2, auto)
+        gap: 30px
+        justify-content: space-between
+        align-items: center
 
 .actions
     display: grid
@@ -100,6 +124,10 @@
             margin-top: 20px
         &Input input, textarea
             width: 100%
+
+@media screen and (max-width: 920px)
+    .profile
+        grid-template-columns: none
 
 @media screen and (max-width: 700px)
     .header

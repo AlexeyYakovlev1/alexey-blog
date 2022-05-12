@@ -8,7 +8,7 @@ const Header = (): JSX.Element => {
         <header className={classes.header}>
             <div className={cn(classes.body, "container")}>
                 <div className={classes.top}>
-                    <Title tag="h2">
+                    <Title tag="h2" className={classes.title}>
                         <Link href={`/`}>
                             <a>The Alexey Blog</a>
                         </Link>

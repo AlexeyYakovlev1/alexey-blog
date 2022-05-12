@@ -1,5 +1,4 @@
 import classes from "./Post.module.sass";
-import type { NextPage } from "next";
 import MainLayout from "../../components/Layouts/MainLayout";
 import Tag from "../../components/UI/Tag/Tag";
 import cn from "classnames";
@@ -10,8 +9,14 @@ import Button from "../../components/UI/Button/Button";
 import Input from "../../components/UI/Input/Input";
 import Textarea from "../../components/UI/Textarea/Textarea";
 import Image from "next/image";
+import { Context } from "vm";
+import { IPost } from "../../interfaces/post.interface";
 
-const Post: NextPage = (): JSX.Element => {
+interface IPostProps {
+    post: IPost;
+}
+
+const Post = ({ post }: IPostProps): JSX.Element => {
     const comments: Array<IComment> = [
         {
             id: 3,
@@ -28,14 +33,14 @@ const Post: NextPage = (): JSX.Element => {
     ];
     
     return (
-        <MainLayout title={`Владилен Минин о своих курсах по веб-разработке и опыте использования WebStorm`}>
+        <MainLayout title={post.title}>
             <div className={cn(classes.post, "container")}>
                 <header className={classes.header}>
                     <ul className={classes.tags}>
                         <Tag className={classes.tagsItem}>Разработка</Tag>
                         <Tag className={classes.tagsItem}>Умения</Tag>
                     </ul>
-                    <Title className={classes.title}>Владилен Минин о своих курсах по веб-разработке и опыте использования WebStorm</Title>
+                    <Title className={classes.title}>{post.title}</Title>
                     <span className={classes.createdAt}>05.05.2022</span>
                 </header>
                 <div className={classes.coverPhoto}>
@@ -48,11 +53,7 @@ const Post: NextPage = (): JSX.Element => {
                     />
                 </div>
                 <div className={classes.body}>
-                    <p className={classes.description}>
-                        Во-первых, коробочность. Я очень не люблю что-то настраивать. C WebStorm я могу быть уверен в том, что даже если мне придется установить его на новый компьютер, все будет работать сразу, без установки каких-либо расширений. Это очень крутая автоматизация разработки, когда тебе не нужно отвлекаться на что-то лишнее.
-                        Мне также нравится, как много фич зашито внутри WebStorm. Зачастую это что-то очень точечное. Например, когда я вставляю HTML-code в jsx-файл в React, WebStorm автоматически меняет class на className. Мелочь, а приятно. Возможно, для VS Code есть расширение, которое может сделать то же самое, но его еще надо найти и установить. И проверить, что оно работает. WebStorm же делает это за тебя, и это классно.
-                        Еще по сравнению с VS Code WebStorm — это некая надежность. Например, у меня часто бывает такая ситуация, что надо рефакторить проект. Например, поменять названия папок или файлов. Когда я делаю это в WebStorm, то я практически на 100% уверен, что он это сделает. В VS Code с этим бывают проблемы.
-                    </p>
+                    <div dangerouslySetInnerHTML={{__html: post.description}} className={classes.description} />
                 </div>
                 <div className={classes.comments}>
                     <Title tag="h2" className={classes.commentsTitle}>Комментарии</Title>
@@ -80,3 +81,14 @@ const Post: NextPage = (): JSX.Element => {
 };
 
 export default Post;
+
+export async function getServerSideProps(ctx: Context) {
+    const response = await fetch(`${process.env.API_URL}/posts/${ctx.params.id}`, {
+        method: "GET"
+    });
+    const data = await response.json();
+
+    return {
+        props: { post: data.post }
+    };
+}
