@@ -27,7 +27,7 @@ const Write: NextPage = () => {
                 Authorization: `Bearer ${Cookies.get("token")}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({...content, tags: content.tags.join("").trim().split(",")})
+            body: JSON.stringify({...content, tags: content.tags.join(",").trim().split(",")})
         });
         const data = await response.json();
 

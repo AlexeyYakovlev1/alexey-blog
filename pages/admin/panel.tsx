@@ -11,12 +11,22 @@ import React from "react";
 import Modal from "../../components/UI/Modal/Modal";
 import useAdminCheck from "../../hooks/useAdminCheck";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { logout } from "../../redux/actions/user.actions";
+import Cookies from "js-cookie";
 
 const Panel: NextPage = (): JSX.Element => {
     useAdminCheck();
 
     const [active, setActive] = React.useState<boolean>(false);
     const router = useRouter();
+    const dispatch = useDispatch();
+
+    function logoutHandler() {
+        dispatch(logout());
+        Cookies.remove("token");
+        router.push("/admin/auth");
+    }
 
     return (
         <MainLayout title="Панель администратора">
@@ -52,7 +62,12 @@ const Panel: NextPage = (): JSX.Element => {
                                         <a>Профиль администратора</a>
                                     </Link>
                                 </li>
-                                <li className={classes.headerMenuItem}>Выйти</li>
+                                <li
+                                    className={classes.headerMenuItem}
+                                    onClick={logoutHandler}
+                                >
+                                    Выйти
+                                </li>
                             </ul>
                         </nav>
                     </div>

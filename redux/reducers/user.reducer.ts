@@ -13,6 +13,7 @@ const initialState: IInitialUserState = {
 };
 
 const LOG_IN = "LOG_IN";
+const LOG_OUT = "LOG_OUT";
 
 const userReducer = (state = initialState, action: IActionUser) => {
     switch (action.type) {
@@ -21,6 +22,12 @@ const userReducer = (state = initialState, action: IActionUser) => {
                 ...state,
                 data: action.payload,
                 isAuth: true
+            };
+        case LOG_OUT:
+            return {
+                ...state,
+                data: { ...userData },
+                isAuth: false
             };
         default:
             return { ...state };

@@ -5,6 +5,7 @@ import dynamic from "next/dynamic";
 import React from "react";
 import { useSelector } from "react-redux";
 import { IState } from "../../interfaces/redux.interface";
+import Title from "../UI/Title/Title";
 
 const PostItem = dynamic(
     () => import("./Post/Post"),
@@ -16,12 +17,17 @@ const Posts = (): JSX.Element => {
 
     return (
         <section className={classes.posts}>
-            <Filter />
-            {posts.length ? <ul className={classes.list}>
-                {posts.map((post:IPost) => (
-                    <PostItem key={post.id} {...post} />
-                ))}
-            </ul> : <h1>Постов пока нет...</h1>}
+            {posts.length ? 
+                <React.Fragment>
+                    <Filter />
+                    <ul className={classes.list}>
+                        {posts.map((post:IPost) => (
+                            <PostItem key={post.id} {...post} />
+                        ))}
+                    </ul>
+                </React.Fragment>
+                : <Title tag="h3" style={{ marginTop: "20px" }}>Постов пока нет...</Title>
+            }
         </section>
     );
 };

@@ -21,7 +21,7 @@ const create = authMiddleware(async (req: IGetUserAuthInfoRequest, res: NextApiR
             }
         }
 
-        const query = `INSERT INTO post (owner, title, description, tags) VALUES ($1, $2, $3, $4)`;
+        const query = `INSERT INTO post (owner, title, description, tags) VALUES ($1, $2, $3, $4) RETURNING *`;
         const user: any = req.user;
         const newPost = await db.query(query, [user.id, title, description, idTags]);
 

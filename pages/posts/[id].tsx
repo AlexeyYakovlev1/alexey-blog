@@ -37,8 +37,9 @@ const Post = ({ post }: IPostProps): JSX.Element => {
             <div className={cn(classes.post, "container")}>
                 <header className={classes.header}>
                     <ul className={classes.tags}>
-                        <Tag className={classes.tagsItem}>Разработка</Tag>
-                        <Tag className={classes.tagsItem}>Умения</Tag>
+                        {post.tags.map((tag:string) => (
+                            <Tag key={tag} className={classes.tagsItem}>{tag}</Tag>
+                        ))}
                     </ul>
                     <Title className={classes.title}>{post.title}</Title>
                     <span className={classes.createdAt}>05.05.2022</span>

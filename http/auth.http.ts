@@ -4,7 +4,7 @@ const auth = async () => {
     const response = await fetch(`${process.env.API_URL}/auth`, {
         method: "GET",
         headers: {
-            Authorization: `Bearer ${Cookies.get("token") || undefined}`
+            Authorization: `Bearer ${Cookies.get("token")}`
         }
     });
     const data = await response.json();

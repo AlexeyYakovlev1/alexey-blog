@@ -17,8 +17,9 @@ const Post = (props:IPost): JSX.Element => {
                         </Link>
                     </h2>
                     <ul className={classes.tags}>
-                        <Tag className={classes.tagsItem}>Разработка</Tag>
-                        <Tag className={classes.tagsItem}>Умения</Tag>
+                        {props.tags.map((tag:string) => (
+                            <Tag key={tag} className={classes.tagsItem}>{tag}</Tag>
+                        ))}
                     </ul>
                 </header>
                 <div className={classes.coverPhoto}>

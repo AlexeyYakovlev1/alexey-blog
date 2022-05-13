@@ -3,6 +3,11 @@ export interface IPost {
     owner: number;
     title: string;
     description: string;
-    tag: number;
+    tags: Array<string>;
     createdAt: Date;
+}
+
+export interface ITag {
+    id: number;
+    value: string;
 }

@@ -7,11 +7,13 @@ import { Provider, useDispatch } from "react-redux";
 import { compose } from "redux";
 import auth from "../http/auth.http";
 import { login } from "../redux/actions/user.actions";
+import { updateTags } from "../redux/actions/tags.actions";
 import LoadContext from "../context/load.context";
 import Cookies from "js-cookie";
 import store from "../redux/store";
 import posts from "../http/posts.http";
 import { update } from "../redux/actions/posts.actions";
+import tags from "../http/tags.http";
 
 // for use redux devtools
 declare global {
@@ -47,12 +49,16 @@ const MyApp = ({ Component, pageProps }: AppProps) => {
 
             const { data: userData }: any = await auth();
             const { data: postsData }: any = await posts();
+            const { data: tagsData }: any = await tags();
 
-            dispatch(login(userData.user));
+            if (userData.success) {
+                dispatch(login(userData.user));
+            }
+            
             dispatch(update(postsData.posts));
-
+            dispatch(updateTags(tagsData.tags));
             Cookies.set("token", userData.token);
-    
+
             setLoad(false);
         }
 
