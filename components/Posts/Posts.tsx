@@ -12,8 +12,15 @@ const PostItem = dynamic(
     { loading: () => <span>Loading...</span> }
 );
 
-const Posts = (): JSX.Element => {
-    const posts: Array<IPost> = useSelector((state: IState) => state.posts.list);
+interface IPostsProps {
+    data: Array<IPost>;
+    clear?: boolean;
+}
+
+const Posts = ({ data, clear = true }: IPostsProps): JSX.Element => {
+    let posts: Array<IPost> = useSelector((state: IState) => state.posts.list);
+
+    if (!clear) posts = data;
 
     return (
         <section className={classes.posts}>

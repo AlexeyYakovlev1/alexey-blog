@@ -14,18 +14,80 @@ import { useRouter } from "next/router";
 import { useDispatch } from "react-redux";
 import { logout } from "../../redux/actions/user.actions";
 import Cookies from "js-cookie";
+import AlertContext from "../../context/alert.context";
+import { IPost } from "../../interfaces/post.interface";
+import LoadContext from "../../context/load.context";
+
+interface IDataPosts {
+    posts: Array<IPost>;
+    clear: boolean;
+}
 
 const Panel: NextPage = (): JSX.Element => {
     useAdminCheck();
 
+    // state variables
     const [active, setActive] = React.useState<boolean>(false);
+    const [idPost, setIdPost] = React.useState<number>(0);
+    const [search, setSearch] = React.useState<string>("");
+    const [dataPosts, setDataPosts] = React.useState<IDataPosts>({ posts: [], clear: true });
+    
+    // context variables
+    const { setInfo, setActive: setVisible } = React.useContext(AlertContext);
+    const { setLoad } = React.useContext(LoadContext); 
+    
+    // other variables
     const router = useRouter();
     const dispatch = useDispatch();
 
+    // logout admin
     function logoutHandler() {
         dispatch(logout());
         Cookies.remove("token");
         router.push("/admin/auth");
+    }
+
+    // delete post
+    async function deleteHandler() {
+        const response = await fetch(`${process.env.API_URL}/posts/remove/${idPost}`, {
+            method: "DELETE",
+            headers: {
+                Authorization: `Bearer ${Cookies.get("token")}`
+            }
+        });
+        const data = await response.json();
+
+        if (!data.success) {
+            setInfo({ type: "WRONG", message: data.message || "Не удается удалить пост" });
+            return setVisible(true);
+        }
+
+        setInfo({ type: "SUCCESS", message: data.message || "Пост удален" });
+        setVisible(true);
+    }
+
+    // search post by title
+    async function searchHandler(event: any) {
+        event.preventDefault();
+        setLoad(true);
+
+        if (!search.length) {
+            setDataPosts({ posts: [], clear: true });
+            return setLoad(false);
+        }
+
+        const response = await fetch(`${process.env.API_URL}/posts/find/${search}`, {
+            method: "GET"
+        });
+        const data = await response.json();
+        
+        if (!data.success) {
+            setInfo({ type: "WRONG", message: data.message || "Ошибка при нахождении поста" });
+            return setVisible(true);
+        }
+
+        setDataPosts({ posts: [{ ...data.post }], clear: false });
+        setLoad(false);
     }
 
     return (
@@ -33,13 +95,17 @@ const Panel: NextPage = (): JSX.Element => {
             {active && 
             <Modal setActive={setActive}>
                 <div className={classes.modal}>
+                    <label htmlFor="idPost">Идентификатор поста</label>
                     <Input
+                        id="idPost"
+                        value={idPost}
+                        onChange={(event: any) => setIdPost(event.target.value)}
                         placeholder="Введите идентификатор поста"
                         type="number"
                     />
                     <div className={classes.modalActions}>
-                        <Button className={classes.button} disabled>Изменить</Button>
-                        <Button className={classes.button} disabled>Удалить</Button>
+                        <Button className={classes.button} disabled={!(idPost > 0)}>Изменить</Button>
+                        <Button className={classes.button} disabled={!(idPost > 0)} onClick={deleteHandler}>Удалить</Button>
                     </div>
                 </div>
             </Modal>
@@ -93,14 +159,16 @@ const Panel: NextPage = (): JSX.Element => {
                     </div>
                 </header>
                 <div className={classes.body}>
-                    <form className={classes.search}>
+                    <form className={classes.search} onSubmit={searchHandler}>
                         <Input
+                            value={search}
+                            onChange={(event: any) => setSearch(event.target.value)}
                             type="search"
                             placeholder="Искать пост по заголовку"
                         />
                     </form>
                     <div className={classes.content}>
-                        <Posts />
+                        <Posts data={dataPosts.posts} clear={dataPosts.clear}  />
                     </div>
                 </div>
             </div>
