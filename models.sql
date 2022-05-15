@@ -17,6 +17,7 @@ CREATE TABLE post(
     owner INTEGER,
     FOREIGN KEY (owner) REFERENCES person(id),
     title TEXT NOT NULL,
+    cover_image VARCHAR(255) DEFAULT '/images/no-cover-photo.jpg',
     description TEXT NOT NULL,
     tags INTEGER ARRAY NOT NULL
 );

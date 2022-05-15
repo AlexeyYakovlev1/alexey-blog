@@ -6,7 +6,7 @@ const create = authMiddleware(async (req: IGetUserAuthInfoRequest, res: NextApiR
     const { method, body } = req;
 
     if (method === "POST") {
-        const { title, description, tags } = body;
+        const { title, coverPhoto, description, tags } = body;
 
         const idTags: Array<number> = [];
 
@@ -21,9 +21,9 @@ const create = authMiddleware(async (req: IGetUserAuthInfoRequest, res: NextApiR
             }
         }
 
-        const query = `INSERT INTO post (owner, title, description, tags) VALUES ($1, $2, $3, $4) RETURNING *`;
+        const query = `INSERT INTO post (owner, title, cover_image, description, tags) VALUES ($1, $2, $3, $4, $5) RETURNING *`;
         const user: any = req.user;
-        const newPost = await db.query(query, [user.id, title, description, idTags]);
+        const newPost = await db.query(query, [user.id, title, coverPhoto, description, idTags]);
 
         res.status(201).json({ success: true, message: "Пост опубликован", post: newPost.rows[0] });
     } else {

@@ -4,6 +4,7 @@ export interface IPost {
     title: string;
     description: string;
     tags: Array<string>;
+    cover_image: string;
     createdAt: Date;
 }
 

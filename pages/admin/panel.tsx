@@ -83,7 +83,8 @@ const Panel: NextPage = (): JSX.Element => {
         
         if (!data.success) {
             setInfo({ type: "WRONG", message: data.message || "Ошибка при нахождении поста" });
-            return setVisible(true);
+            setVisible(true);
+            return setLoad(false);
         }
 
         setDataPosts({ posts: [{ ...data.post }], clear: false });
@@ -168,7 +169,7 @@ const Panel: NextPage = (): JSX.Element => {
                         />
                     </form>
                     <div className={classes.content}>
-                        <Posts data={dataPosts.posts} clear={dataPosts.clear}  />
+                        <Posts data={dataPosts.posts} clear={dataPosts.clear} />
                     </div>
                 </div>
             </div>

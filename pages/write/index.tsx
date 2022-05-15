@@ -10,16 +10,29 @@ import { Editor } from '@tinymce/tinymce-react';
 import Cookies from "js-cookie";
 import AlertContext from "../../context/alert.context";
 import Input from "../../components/UI/Input/Input";
+import Image from "next/image";
+import axios from "axios";
+import LoadContext from "../../context/load.context";
 
 const Write: NextPage = () => {
     useAdminCheck();
 
     const editorRef: any = React.useRef(null);
+    
     const [content, setContent] = React.useState({ title: "", description: "", tags: [""] });
+    const [coverImg, setCoverImg] = React.useState<string>("");
+    
     const { setInfo, setActive } = React.useContext(AlertContext);
+    const { setLoad } = React.useContext(LoadContext);
 
     const submitHandler = async (event: any) => {
         event.preventDefault();
+
+        const dataToServer = {
+            ...content,
+            tags: content.tags.join(",").trim().split(","),
+            coverPhoto: coverImg
+        };
 
         const response = await fetch(`${process.env.API_URL}/posts/create`, {
             method: "POST",
@@ -27,7 +40,7 @@ const Write: NextPage = () => {
                 Authorization: `Bearer ${Cookies.get("token")}`,
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({...content, tags: content.tags.join(",").trim().split(",")})
+            body: JSON.stringify(dataToServer)
         });
         const data = await response.json();
 
@@ -38,6 +51,24 @@ const Write: NextPage = () => {
         
         setInfo({ type: "SUCCESS", message: data.message || "Пост опубликован" });
         setActive(true);
+    };
+
+    const uploadCoverImage = async(event: any) => {
+        if (!event.target.files?.length) return;
+        setLoad(true);
+
+        const formData = new FormData();
+
+        formData.append("cover", event.target.files[0]);
+
+        const response = await axios.post(`${process.env.API_URL}/posts/files/cover`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        });
+
+        setCoverImg(response.data.filename);
+        setLoad(false);
     };
 
     return (
@@ -60,6 +91,24 @@ const Write: NextPage = () => {
                         value={content.tags.join(",")}
                         onChange={(event: any) => setContent({ ...content, tags: event.target.value.split(",") })}
                     />
+                    <div className={classes.inputFile}>
+                        <div className={classes.inputCover}>
+                            <label htmlFor="coverPhoto">Обложка</label>
+                            <Input
+                                type="file"
+                                onChange={uploadCoverImage}
+                                id="coverPhoto"
+                            />
+                        </div>
+                        {coverImg && <Image
+                            src={`/coverImages/${coverImg}`}
+                            alt="обложка"
+                            layout="responsive"
+                            width="100%"
+                            height="40px"
+                            objectFit="contain"
+                        />}
+                    </div>
                     <Editor
                         // tinymceScriptSrc={process.env.PROJECT_ROOT + "/plugin/tinymce/tinymce.min.js"}
                         id="editor"

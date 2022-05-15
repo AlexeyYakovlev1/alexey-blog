@@ -5,7 +5,7 @@ import Button from "../../UI/Button/Button";
 import Tag from "../../UI/Tag/Tag";
 import classes from "./Post.module.sass";
 
-const Post = (props:IPost): JSX.Element => {
+const Post = (props: IPost): JSX.Element => {
     return (
         <li className={classes.post}>
             <article className={classes.content}>
@@ -24,7 +24,7 @@ const Post = (props:IPost): JSX.Element => {
                 </header>
                 <div className={classes.coverPhoto}>
                     <Image
-                        src={"/images/coverPhoto.png"}
+                        src={`/coverImages/${props.cover_image}`}
                         alt="cover photo"
                         layout="responsive"
                         width="100%"

@@ -46,7 +46,7 @@ const Post = ({ post }: IPostProps): JSX.Element => {
                 </header>
                 <div className={classes.coverPhoto}>
                     <Image
-                        src="/images/coverPhoto.png"
+                        src={`/coverImages/${post.cover_image}`}
                         alt="cover photo"
                         layout="responsive"
                         width="100%"
