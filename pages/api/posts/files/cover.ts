@@ -2,6 +2,7 @@ import handler from "../../handler";
 import multer from "multer";
 import path from "path";
 import { NextApiRequest, NextApiResponse } from "next";
+import authenticatedMiddleware from "../../middleware/auth.middleware";
 
 export const config = {
     api: { bodyParser: false }
@@ -25,7 +26,7 @@ export interface IFileRequest extends NextApiRequest {
     file: any;
 }
 
-export default handler.post(async (req: IFileRequest, res: NextApiResponse) => {
+export default authenticatedMiddleware(handler.post(async (req: IFileRequest, res: NextApiResponse) => {
     try {
         const { file } = req;
 
@@ -37,4 +38,4 @@ export default handler.post(async (req: IFileRequest, res: NextApiResponse) => {
     } catch (e: any) {
         res.status(500).json({ success: false, message: `Ошибка сервера: ${e.message}` });
     }
-});
+}));

@@ -1,6 +1,8 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import db from "../../../../db";
 import authenticatedMiddleware from "../../middleware/auth.middleware";
+import { unlink } from "fs";
+import { resolve } from "path";
 
 const remove = authenticatedMiddleware(async (req: NextApiRequest, res: NextApiResponse) => {
     const { method, query } = req;
@@ -14,12 +16,19 @@ const remove = authenticatedMiddleware(async (req: NextApiRequest, res: NextApiR
                 return res.status(400).json({ success: false, message: "Поста по такому идентификатору не существует" });
             }
 
-            // удаляем теги поста
+            // удаляем теги
             for (let i = 0; i < findPost.rows[0].tags.length; i++) {
                 const idTag = findPost.rows[0].tags[i];
                 const queryForDeleteTag = `DELETE FROM tag WHERE id = $1`;
                 await db.query(queryForDeleteTag, [idTag]);
             }
+
+            // удаляем обложку
+            unlink(resolve(`${process.env.PROJECT_ROOT}/public/coverImages/${findPost.rows[0].cover_image}`), (err) => {
+                if (err) {
+                    return res.status(400).json({ success: false, message: `Ошибка при удалении обложки: ${err.message}` });
+                }
+            });
 
             const queryForDelete = `DELETE FROM post WHERE id = $1`;
             await db.query(queryForDelete, [query.id]);

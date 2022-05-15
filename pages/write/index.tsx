@@ -63,7 +63,8 @@ const Write: NextPage = () => {
 
         const response = await axios.post(`${process.env.API_URL}/posts/files/cover`, formData, {
             headers: {
-                "Content-Type": "multipart/form-data"
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${Cookies.get("token")}`
             }
         });
 
@@ -127,7 +128,7 @@ const Write: NextPage = () => {
                                 'bold italic backcolor | alignleft aligncenter ' +
                                 'alignright alignjustify | bullist numlist outdent indent | ' +
                                 'removeformat | help',
-                            content_style: 'body { font-family: Helvetica, Arial, sans-serif; font-size: 14px }'
+                            content_style: 'body { font-family: Helvetica, Arial, Inter, sans-serif; font-size: 18px }'
                         }}
                         onEditorChange={text => setContent({ ...content, description: text })}
                     />

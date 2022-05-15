@@ -21,7 +21,7 @@ const getAll = async (req: NextApiRequest, res: NextApiResponse) => {
                 }
             }
 
-            res.json({ success: true, posts: allPosts.rows });
+            res.json({ success: true, posts: allPosts.rows.reverse() });
         } catch (e: any) {
             res.status(500).json({ success: false, message: `Ошибка сервера: ${e.message}` });
         }
