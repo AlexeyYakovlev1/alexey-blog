@@ -13,20 +13,71 @@ import React from "react";
 import Textarea from "../../components/UI/Textarea/Textarea";
 import Button from "../../components/UI/Button/Button";
 import { useForm } from "react-hook-form";
+import axios from "axios";
+import Cookies from "js-cookie";
+import AlertContext from "../../context/alert.context";
 
 const AdminProfile = (): JSX.Element => {
     useAdminCheck();
 
     const { setLoad } = React.useContext(LoadContext);
+    const { setInfo, setActive } = React.useContext(AlertContext);
+
     const admin: IUser = useSelector((state: IState) => state.user.data);
     const { register, formState: { errors, isValid }, handleSubmit } = useForm({ mode: "onChange" });
+    
+    const [avatar, setAvatar] = React.useState<string | null>(null);
 
     if (!admin) setLoad(true);
 
-    const srcAvatar = admin.avatar || "/images/admin-avatar.jpg";
+    const srcAvatar = admin.avatar ? `/adminAvatars/${admin.avatar}` : "/images/admin-avatar.jpg";
     
+    // загрузка аватара
+    const uploadAvatar = async(event: any) => {
+        if (!event.target?.files.length) return;
+        setLoad(true);
+
+        const formData = new FormData();
+        formData.append("avatar", event.target.files[0]);
+        const { data } = await axios.post(`${process.env.API_URL}/admins/avatar`, formData, {
+            headers: {
+                "Content-Type": "multipart/form-data",
+                Authorization: `Bearer ${Cookies.get("token")}`
+            }
+        });
+        if (!data.success) {
+            setInfo({ type: "WRONG", message: data.message || "Ошибка при загрузке аватара" });
+            setLoad(false);
+            return setActive(true);
+        }
+
+        setAvatar(data.filename);
+        setLoad(false);
+    };
+
+    // отправка полной формы данных для изменения
     const changeHandler = async(data: any) => {
-        console.log(data);
+        setLoad(true);
+        const conf = { ...data, avatar };
+        
+        const response = await fetch(`${process.env.API_URL}/settings/change`, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${Cookies.get("token")}`
+            },
+            body: JSON.stringify(conf)
+        });
+        const serverData = await response.json();
+        if (!serverData.success) {
+            setInfo({ type: "WRONG", message: data.message || "Ошибка при изменении данных" });
+            setLoad(false);
+            return setActive(true);
+        }
+
+        setInfo({ type: "SUCCESS", message: data.message || "Данные изменены" });
+        setActive(true);
+        setLoad(false);
     };
 
     return (
@@ -55,13 +106,14 @@ const AdminProfile = (): JSX.Element => {
                     <form className={classes.profileSettingsForm} onSubmit={handleSubmit(changeHandler)}>
                         <div className={classes.profileSettingsAvatar}>
                             <Image
-                                src={srcAvatar}
+                                src={avatar ? `/adminAvatars/${avatar}` : srcAvatar}
                                 alt={admin.name}
                                 width={150}
                                 height={150}
                             />
                             <Input
                                 type="file"
+                                onChange={uploadAvatar}
                             />
                         </div>
                         <div className={classes.profileSettingsInput}>

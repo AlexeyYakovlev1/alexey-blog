@@ -8,7 +8,7 @@ module.exports = {
     return config;
   },
   env: {
-      API_URL: "http://localhost:3000/api",
+      API_URL: "http://192.168.1.118:3000/api",
       PROJECT_ROOT: __dirname
   }
 };

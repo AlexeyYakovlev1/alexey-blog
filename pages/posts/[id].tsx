@@ -44,15 +44,15 @@ const Post = ({ post }: IPostProps): JSX.Element => {
                     <Title className={classes.title}>{post.title}</Title>
                     <span className={classes.createdAt}>05.05.2022</span>
                 </header>
-                <div className={classes.coverPhoto}>
+                {post.cover_image && <div className={classes.coverPhoto}>
                     <Image
                         src={`/coverImages/${post.cover_image}`}
                         alt="cover photo"
                         layout="responsive"
                         width="100%"
-                        height="35px"
+                        height="60px"
                     />
-                </div>
+                </div>}
                 <div className={classes.body}>
                     <div dangerouslySetInnerHTML={{__html: post.description}} className={classes.description} />
                 </div>

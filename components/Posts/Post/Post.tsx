@@ -22,7 +22,7 @@ const Post = (props: IPost): JSX.Element => {
                         ))}
                     </ul>
                 </header>
-                <div className={classes.coverPhoto}>
+                {props.cover_image && <div className={classes.coverPhoto}>
                     <Image
                         src={`/coverImages/${props.cover_image}`}
                         alt="cover photo"
@@ -31,10 +31,7 @@ const Post = (props: IPost): JSX.Element => {
                         height="40px"
                         objectFit="contain"
                     />
-                </div>
-                <div className={classes.content}>
-                    <div dangerouslySetInnerHTML={{__html: props.description}} className={classes.description} />
-                </div>
+                </div>}
                 <Button>
                     <Link href={`/posts/${props.id}`}>
                         <a>Читать полностью</a>
