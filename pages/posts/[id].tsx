@@ -11,6 +11,7 @@ import Textarea from "../../components/UI/Textarea/Textarea";
 import Image from "next/image";
 import { Context } from "vm";
 import { IPost } from "../../interfaces/post.interface";
+import useDate from "../../hooks/useDate";
 
 interface IPostProps {
     post: IPost;
@@ -31,6 +32,7 @@ const Post = ({ post }: IPostProps): JSX.Element => {
             createdAt: new Date()
         }
     ];
+    const createdAt = useDate(post.created_at);
     
     return (
         <MainLayout title={post.title}>
@@ -42,7 +44,7 @@ const Post = ({ post }: IPostProps): JSX.Element => {
                         ))}
                     </ul>
                     <Title className={classes.title}>{post.title}</Title>
-                    <span className={classes.createdAt}>05.05.2022</span>
+                    <span className={classes.createdAt}>{createdAt}</span>
                 </header>
                 {post.cover_image && <div className={classes.coverPhoto}>
                     <Image

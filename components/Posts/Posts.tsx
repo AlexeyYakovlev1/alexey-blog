@@ -6,10 +6,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { IState } from "../../interfaces/redux.interface";
 import Title from "../UI/Title/Title";
+import Loader from "../UI/Loader/Loader";
 
 const PostItem = dynamic(
     () => import("./Post/Post"),
-    { loading: () => <span>Loading...</span> }
+    { loading: () => <Loader /> }
 );
 
 interface IPostsProps {

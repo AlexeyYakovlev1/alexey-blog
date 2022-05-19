@@ -1,16 +1,19 @@
 import Image from "next/image";
 import Link from "next/link";
+import useDate from "../../../hooks/useDate";
 import { IPost } from "../../../interfaces/post.interface";
 import Button from "../../UI/Button/Button";
 import Tag from "../../UI/Tag/Tag";
 import classes from "./Post.module.sass";
 
 const Post = (props: IPost): JSX.Element => {
+    const createdAt = useDate(props.created_at);
+    
     return (
         <li className={classes.post}>
             <article className={classes.content}>
                 <header className={classes.header}>
-                    <span className={classes.createdAt}>05.05.2022</span>
+                    <span className={classes.createdAt}>{createdAt}</span>
                     <h2 className={classes.title}>
                         <Link href={`/posts/${props.id}`}>
                             <a>{props.title}</a>

@@ -29,10 +29,11 @@ const MainLayout = ({ title = "The Alexey Blog", children }: IMainLayoutProps): 
     return (
         <React.Fragment>
             <Head>
-                <title>{title}</title>
+                <link rel="shortcut icon" href="/images/logo.ico" type="image/x-icon"></link>
                 <meta name="keywords" content="blog,programmer,posts,dev" />
                 <meta name="description" content="simple blog about alexey yakovlev" />
                 <meta charSet="utf-8" />
+                <title>{title}</title>
             </Head>
             <main className={classes.mainLayoutWrapper}>
                 <Header />

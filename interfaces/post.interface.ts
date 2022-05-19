@@ -5,7 +5,7 @@ export interface IPost {
     description: string;
     tags: Array<string>;
     cover_image: string;
-    createdAt: Date;
+    created_at: Date;
 }
 
 export interface ITag {

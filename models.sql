@@ -16,6 +16,7 @@ CREATE TABLE post(
     id SERIAL PRIMARY KEY,
     owner INTEGER,
     FOREIGN KEY (owner) REFERENCES person(id),
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     title TEXT NOT NULL,
     cover_image VARCHAR(255) DEFAULT '/images/no-cover-photo.jpg',
     description TEXT NOT NULL,
