@@ -1,24 +1,14 @@
-import multer from "multer";
 import { NextApiResponse } from "next";
-import path from "path";
 import handler from "../handler";
 import authenticatedMiddleware from "../middleware/auth.middleware";
 import { IFileRequest } from "../posts/files/cover";
+import uploadService from "../../../services/uploadService";
 
 export const config = {
     api: { bodyParser: false }
 };
 
-const storage = multer.diskStorage({
-    destination: (req, file, cb) => {
-        cb(null, "public/adminAvatars");
-    },
-    filename: (req, file, cb) => {
-        cb(null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`);
-    }
-});
-const image = multer({ storage, limits: { fieldSize: 25 * 1024 * 1024 } });
-const avatar = image.single("avatar");
+const avatar: any = uploadService("avatar", "single", "public/adminAvatars");
 
 handler.use(avatar);
 

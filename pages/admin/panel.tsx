@@ -11,12 +11,11 @@ import React from "react";
 import Modal from "../../components/UI/Modal/Modal";
 import useAdminCheck from "../../hooks/useAdminCheck";
 import { useRouter } from "next/router";
-import { useDispatch } from "react-redux";
-import { logout } from "../../redux/actions/user.actions";
 import Cookies from "js-cookie";
 import AlertContext from "../../context/alert.context";
 import { IPost } from "../../interfaces/post.interface";
 import LoadContext from "../../context/load.context";
+import AdminNav from "../../components/AdminNav/AdminNav";
 
 interface IDataPosts {
     posts: Array<IPost>;
@@ -38,14 +37,6 @@ const Panel: NextPage = (): JSX.Element => {
     
     // other variables
     const router = useRouter();
-    const dispatch = useDispatch();
-
-    // logout admin
-    function logoutHandler() {
-        dispatch(logout());
-        Cookies.remove("token");
-        router.push("/admin/auth");
-    }
 
     // delete post
     async function deleteHandler() {
@@ -113,31 +104,7 @@ const Panel: NextPage = (): JSX.Element => {
             }
             <div className={cn(classes.panel, "container")}>
                 <header className={classes.header}>
-                    <div className={classes.headerNav}>
-                        <Title tag="h2">Навигационная панель</Title>
-                        <nav className={classes.headerMenu}>
-                            <ul className={classes.headerMenuList}>
-                                <li className={cn(classes.headerMenuItem, {
-                                    [classes.headerMenuItemActive]: router.pathname === "/admin/panel"
-                                })}>
-                                    <Link href={`/admin/panel`}>
-                                        <a>Панель администратора</a>
-                                    </Link>
-                                </li>
-                                <li className={classes.headerMenuItem}>
-                                    <Link href={`/admin/profile`}>
-                                        <a>Профиль администратора</a>
-                                    </Link>
-                                </li>
-                                <li
-                                    className={classes.headerMenuItem}
-                                    onClick={logoutHandler}
-                                >
-                                    Выйти
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
+                    <AdminNav />
                     <div className={classes.headerPosts}>
                         <Title tag="h2">Посты</Title>
                         <ul className={classes.actions}>

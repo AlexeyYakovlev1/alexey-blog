@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Cookies from "js-cookie";
 import AlertContext from "../../context/alert.context";
+import AdminNav from "../../components/AdminNav/AdminNav";
 
 const AdminProfile = (): JSX.Element => {
     useAdminCheck();
@@ -83,106 +84,111 @@ const AdminProfile = (): JSX.Element => {
     return (
         <MainLayout title={`Администратор ${admin.name}`}>
             <div className={cn(classes.profile, "container")}>
-                <div className={classes.profileInfo}>
-                    <div className={classes.profileInfoAvatar}>
-                        <Image
-                            src={srcAvatar}
-                            alt={admin.name}
-                            width={150}
-                            height={150}
-                        />
-                    </div>
-                    <Title tag="h2" className={classes.profileInfoName}>{admin.name}</Title>
-                    <small className={classes.profileInfoEmail}>{admin.email}</small>
-                    <p className={classes.profileInfoDescription}>{admin.description}</p>
-                </div>
-                <div className={classes.profileSettings}>
-                    <header className={classes.profileSettingsHeader}>
-                        <Title tag="h2" className={classes.profileSettingsTitle}>Настройка информации</Title>
-                        <p className={classes.profileSettingsDescription}>
-                            Чтобы изменить данные об аккаунте, введите их ниже.
-                        </p>    
-                    </header>
-                    <form className={classes.profileSettingsForm} onSubmit={handleSubmit(changeHandler)}>
-                        <div className={classes.profileSettingsAvatar}>
+                <header className={classes.profileHeader}>
+                    <AdminNav />
+                </header>
+                <div className={classes.profileContent}>
+                    <div className={classes.profileInfo}>
+                        <div className={classes.profileInfoAvatar}>
                             <Image
-                                src={avatar ? `/adminAvatars/${avatar}` : srcAvatar}
+                                src={srcAvatar}
                                 alt={admin.name}
                                 width={150}
                                 height={150}
                             />
-                            <Input
-                                type="file"
-                                onChange={uploadAvatar}
-                            />
                         </div>
-                        <div className={classes.profileSettingsInput}>
-                            {errors?.name && <span className={classes.inputWrong}>
-                                {errors?.name?.message || "Введите корректное имя"}
-                            </span>}
-                            <Input
-                                {...register("name", {
-                                    required: {
-                                        value: true,
-                                        message: "Поле обязательно к заполнению"
-                                    },
-                                    minLength: {
-                                        value: 3,
-                                        message: "Минимальная длина имени 3 символа"
-                                    }
-                                })}
-                                type="text"
-                                defaultValue={admin.name}
-                                placeholder="Введите ваше имя"
-                            />
-                        </div>
-                        <div className={classes.profileSettingsInput}>
-                            {errors?.email && <span className={classes.inputWrong}>
-                                {errors?.email?.message || "Введите корректную почту"}
-                            </span>}
-                            <Input
-                                {...register("email", {
-                                    required: {
-                                        value: true,
-                                        message: "Поле обязательно к заполнению"
-                                    },
-                                    pattern: {
-                                        value: /\S+@\S+\.\S+/,
-                                        message: "Почта не является корректной"
-                                    }
-                                })}
-                                type="email"
-                                defaultValue={admin.email}
-                                placeholder="Введите ваш email"
-                            />
-                        </div>
-                        <div className={classes.profileSettingsInput}>
-                            {errors?.description && <span className={classes.inputWrong}>
-                                {errors?.description?.message || "Введите корректное описание"}
-                            </span>}
-                            <Textarea
-                                {...register("description", {
-                                    required: {
-                                        value: true,
-                                        message: "Поле обязательно к заполнению"
-                                    },
-                                    minLength: {
-                                        value: 10,
-                                        message: "Минимальная длина описания 10 символов"
-                                    }
-                                })}
-                                defaultValue={admin.description}
-                                placeholder="Введите описание профиля"
-                            />
-                        </div>
-                        <Button
-                            className={classes.profileSettingsSubmit}
-                            type="submit"
-                            disabled={!isValid}
-                        >
-                            Сохранить
-                        </Button>
-                    </form>
+                        <Title tag="h2" className={classes.profileInfoName}>{admin.name}</Title>
+                        <small className={classes.profileInfoEmail}>{admin.email}</small>
+                        <p className={classes.profileInfoDescription}>{admin.description}</p>
+                    </div>
+                    <div className={classes.profileSettings}>
+                        <header className={classes.profileSettingsHeader}>
+                            <Title tag="h2" className={classes.profileSettingsTitle}>Настройка информации</Title>
+                            <p className={classes.profileSettingsDescription}>
+                                Чтобы изменить данные об аккаунте, введите их ниже.
+                            </p>    
+                        </header>
+                        <form className={classes.profileSettingsForm} onSubmit={handleSubmit(changeHandler)}>
+                            <div className={classes.profileSettingsAvatar}>
+                                <Image
+                                    src={avatar ? `/adminAvatars/${avatar}` : srcAvatar}
+                                    alt={admin.name}
+                                    width={150}
+                                    height={150}
+                                />
+                                <Input
+                                    type="file"
+                                    onChange={uploadAvatar}
+                                />
+                            </div>
+                            <div className={classes.profileSettingsInput}>
+                                {errors?.name && <span className={classes.inputWrong}>
+                                    {errors?.name?.message || "Введите корректное имя"}
+                                </span>}
+                                <Input
+                                    {...register("name", {
+                                        required: {
+                                            value: true,
+                                            message: "Поле обязательно к заполнению"
+                                        },
+                                        minLength: {
+                                            value: 3,
+                                            message: "Минимальная длина имени 3 символа"
+                                        }
+                                    })}
+                                    type="text"
+                                    defaultValue={admin.name}
+                                    placeholder="Введите ваше имя"
+                                />
+                            </div>
+                            <div className={classes.profileSettingsInput}>
+                                {errors?.email && <span className={classes.inputWrong}>
+                                    {errors?.email?.message || "Введите корректную почту"}
+                                </span>}
+                                <Input
+                                    {...register("email", {
+                                        required: {
+                                            value: true,
+                                            message: "Поле обязательно к заполнению"
+                                        },
+                                        pattern: {
+                                            value: /\S+@\S+\.\S+/,
+                                            message: "Почта не является корректной"
+                                        }
+                                    })}
+                                    type="email"
+                                    defaultValue={admin.email}
+                                    placeholder="Введите ваш email"
+                                />
+                            </div>
+                            <div className={classes.profileSettingsInput}>
+                                {errors?.description && <span className={classes.inputWrong}>
+                                    {errors?.description?.message || "Введите корректное описание"}
+                                </span>}
+                                <Textarea
+                                    {...register("description", {
+                                        required: {
+                                            value: true,
+                                            message: "Поле обязательно к заполнению"
+                                        },
+                                        minLength: {
+                                            value: 10,
+                                            message: "Минимальная длина описания 10 символов"
+                                        }
+                                    })}
+                                    defaultValue={admin.description}
+                                    placeholder="Введите описание профиля"
+                                />
+                            </div>
+                            <Button
+                                className={classes.profileSettingsSubmit}
+                                type="submit"
+                                disabled={!isValid}
+                            >
+                                Сохранить
+                            </Button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </MainLayout>

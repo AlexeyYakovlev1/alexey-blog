@@ -1,0 +1,23 @@
+@import "../../styles/_vars"
+
+.admin
+    &Nav
+        display: grid
+        grid-template-rows: repeat(2, auto)
+        gap: 20px
+    &Menu
+        max-width: 550px
+        &List
+            display: flex
+            justify-content: space-between
+            align-items: center
+            flex-wrap: wrap
+        &Item
+            margin-bottom: 15px
+            cursor: pointer
+            font-size: 15px
+            color: $gray
+            &:hover
+                color: $dark
+            &Active
+                color: $dark
