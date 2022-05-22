@@ -28,9 +28,9 @@ const Alert = ({ className, ...props }: IAlertProps): JSX.Element => {
             </div>
             <div className={classes.content}>
                 <span className={classes.title}>
-                    {info.type === "SUCCESS" && "Ура! Все сработало"}
-                    {info.type === "WRONG" && "Хм, что-то не так"}
-                    {info.type === "INFO" && "Вы знали?"}
+                    {info.type === "SUCCESS" && "Успех"}
+                    {info.type === "WRONG" && "Ошибка"}
+                    {info.type === "INFO" && "Информация"}
                 </span>
                 <p className={classes.message}>{info.message}</p>
             </div>

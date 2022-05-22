@@ -1,5 +1,4 @@
 import { IPost } from "../../interfaces/post.interface";
-import Filter from "../Filter/Filter";
 import classes from "./Posts.module.sass";
 import dynamic from "next/dynamic";
 import React from "react";
@@ -26,14 +25,11 @@ const Posts = ({ data, clear = true }: IPostsProps): JSX.Element => {
     return (
         <section className={classes.posts}>
             {posts.length ? 
-                <React.Fragment>
-                    <Filter />
-                    <ul className={classes.list}>
-                        {posts.map((post:IPost) => (
-                            <PostItem key={post.id} {...post} />
-                        ))}
-                    </ul>
-                </React.Fragment>
+                <ul className={classes.list}>
+                    {posts.map((post:IPost) => (
+                        <PostItem key={post.id} {...post} />
+                    ))}
+                </ul>
                 : <Title tag="h3" style={{ marginTop: "20px" }}>Постов пока нет...</Title>
             }
         </section>

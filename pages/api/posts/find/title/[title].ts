@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import db from "../../../../db";
-import { IPost } from "../../../../interfaces/post.interface";
+import db from "../../../../../db";
+import { IPost } from "../../../../../interfaces/post.interface";
 
 const findPostByTitle = async (req: NextApiRequest, res: NextApiResponse) => {
     const { method, query } = req;
@@ -22,5 +22,6 @@ const findPostByTitle = async (req: NextApiRequest, res: NextApiResponse) => {
         res.status(400).json({ success: false, message: "Мы используем только GET запрос" });
     }
 };
+
 
 export default findPostByTitle;

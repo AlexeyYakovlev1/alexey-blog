@@ -16,8 +16,9 @@ import AlertContext from "../../context/alert.context";
 import { IPost } from "../../interfaces/post.interface";
 import LoadContext from "../../context/load.context";
 import AdminNav from "../../components/AdminNav/AdminNav";
+import Filter from "../../components/Filter/Filter";
 
-interface IDataPosts {
+export interface IDataPosts {
     posts: Array<IPost>;
     clear: boolean;
 }
@@ -67,7 +68,7 @@ const Panel: NextPage = (): JSX.Element => {
             return setLoad(false);
         }
 
-        const response = await fetch(`${process.env.API_URL}/posts/find/${search}`, {
+        const response = await fetch(`${process.env.API_URL}/posts/find/title/${search}`, {
             method: "GET"
         });
         const data = await response.json();
@@ -136,6 +137,7 @@ const Panel: NextPage = (): JSX.Element => {
                         />
                     </form>
                     <div className={classes.content}>
+                        <Filter setPosts={setDataPosts} />
                         <Posts data={dataPosts.posts} clear={dataPosts.clear} />
                     </div>
                 </div>
